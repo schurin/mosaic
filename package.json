@@ -10,8 +10,8 @@
         "url": "https://github.com/positive-js/mosaic.git"
     },
     "engines": {
-        "node": ">= 10",
-        "npm": ">=6"
+        "node": "^12.0.0",
+        "yarn": ">= 1.19.2"
     },
     "requiredAngularVersion": ">=9.0.0",
     "dependencies": {
@@ -130,9 +130,9 @@
         "ts-node": "4.1.0",
         "tsconfig-paths": "^3.7.0",
         "tsconfig-paths-webpack-plugin": "^3.2.0",
-        "tsickle": "^0.35.0",
+        "tsickle": "^0.38.0",
         "tslint": "^5.18.0",
-        "typescript": "~3.4.5",
+        "typescript": "~3.7.5",
         "typescript-tslint-plugin": "^0.2.0",
         "uglify-js": "^2.8.29",
         "url-loader": "^1.1.2",
