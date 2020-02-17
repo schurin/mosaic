@@ -67,12 +67,14 @@ jobs:
     validate_licenses:
         <<: *job_defaults
         steps:
+            - *yarn_download
             - attach_workspace: *attach_options
             - run: yarn run valid:lic
 
     build_mosaic_docs:
         <<: *job_defaults
         steps:
+            - *yarn_download
             - attach_workspace: *attach_options
             - run:
                   name: Setup Environment Variables
@@ -94,6 +96,7 @@ jobs:
     build_mosaic:
         <<: *job_defaults
         steps:
+            - *yarn_download
             - attach_workspace: *attach_options
             - run: yarn run build:mosaic
             - persist_to_workspace:
@@ -104,6 +107,7 @@ jobs:
     build_cdk:
         <<: *job_defaults
         steps:
+            - *yarn_download
             - attach_workspace: *attach_options
             - run: yarn run build:cdk
             - persist_to_workspace:
@@ -114,6 +118,7 @@ jobs:
     build_mosaic-moment-adapter:
         <<: *job_defaults
         steps:
+            - *yarn_download
             - attach_workspace: *attach_options
             - run: yarn run build:mosaic-moment-adapter
             - persist_to_workspace:
@@ -124,6 +129,7 @@ jobs:
     build_dev_app_aot:
         <<: *job_defaults
         steps:
+            - *yarn_download
             - *attach_release_output
             - attach_workspace: *attach_options
             - run: yarn run ci:aot
@@ -131,6 +137,7 @@ jobs:
     test_unit:
         <<: *job_defaults
         steps:
+            - *yarn_download
             - attach_workspace: *attach_options
             - run:
                   command: yarn run test:unit
@@ -146,6 +153,7 @@ jobs:
     snapshot_publish:
         <<: *job_defaults
         steps:
+            - *yarn_download
             - *checkout_code
             - *restore_cache
             - *attach_release_output
@@ -158,6 +166,7 @@ jobs:
     preview_mosaic_docs:
         <<: *job_defaults
         steps:
+            - *yarn_download
             - add_ssh_keys:
                   fingerprints:
                       - "c3:de:eb:9c:82:70:a8:23:f3:4e:92:b8:07:d2:22:df"
@@ -178,6 +187,7 @@ jobs:
     cleanup_preview_mosaic_docs:
         <<: *job_defaults
         steps:
+            - *yarn_download
             - add_ssh_keys:
                   fingerprints:
                       - "c3:de:eb:9c:82:70:a8:23:f3:4e:92:b8:07:d2:22:df"
