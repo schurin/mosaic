@@ -38,6 +38,14 @@ var_8: &attach_release_output
 
 var_9: &release_path "releases/**/*"
 
+# Anchor that can be used to download and install Yarn globally in the bash environment.
+var_12: &yarn_download
+    run:
+        name: "Downloading and installing Yarn"
+        command: |
+            touch $BASH_ENV
+            curl -o- -L https://yarnpkg.com/install.sh | PROFILE=$BASH_ENV bash -s -- --version "1.19.2"
+
 attach_options: &attach_options
     at: .
 
@@ -48,6 +56,7 @@ jobs:
         steps:
             - *checkout_code
             - *restore_cache
+            - *yarn_download
             - *yarn_install
             - persist_to_workspace:
                   root: .
