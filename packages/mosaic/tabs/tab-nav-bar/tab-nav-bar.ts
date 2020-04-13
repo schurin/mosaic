@@ -45,12 +45,11 @@ export const McTabNavMixinBase: CanColorCtor &
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class McTabNav extends McTabNavMixinBase
-    implements CanColor {
-        constructor(elementRef: ElementRef) {
-            super(elementRef);
-        }
-     }
+export class McTabNav extends McTabNavMixinBase implements CanColor {
+    constructor(elementRef: ElementRef) {
+        super(elementRef);
+    }
+ }
 
 // Boilerplate for applying mixins to McTabLink.
 export class McTabLinkBase {}
@@ -69,7 +68,7 @@ export const McTabLinkMixinBase: HasTabIndexCtor & CanDisableCtor &
         class: 'mc-tab-link',
         '[attr.aria-current]': 'active',
         '[attr.aria-disabled]': 'disabled.toString()',
-        '[attr.tabIndex]': 'tabIndex',
+        '[attr.tabindex]': 'tabIndex',
         '[class.mc-disabled]': 'disabled',
         '[class.mc-active]': 'active'
     }

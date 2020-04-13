@@ -22,8 +22,7 @@ import { MC_DROPDOWN_PANEL, McDropdownPanel } from './dropdown-panel';
 /** @docs-private */
 export class McDropdownItemBase {}
 // tslint:disable-next-line:naming-convention
-export const McDropdownItemMixinBase: CanDisableCtor & typeof McDropdownItemBase =
-    mixinDisabled(McDropdownItemBase);
+export const McDropdownItemMixinBase: CanDisableCtor & typeof McDropdownItemBase = mixinDisabled(McDropdownItemBase);
 
 /**
  * This directive is intended to be used inside an mc-dropdown tag.
@@ -36,10 +35,10 @@ export const McDropdownItemMixinBase: CanDisableCtor & typeof McDropdownItemBase
     host: {
         class: 'mc-dropdown__item',
         '[class.mc-dropdown__item_highlighted]': 'highlighted',
-        '[attr.role]': 'role',
-        '[attr.tabindex]': 'getTabIndex()',
         '[class.mc-disabled]': 'disabled',
-        '(click)': 'checkDisabled($event)',
+        '[attr.role]': 'role',
+        '[attr.tabindex]': 'this.disabled ? -1 : (tabIndex || 0)',
+        '(click)': 'haltDisabledEvents($event)',
         '(mouseenter)': 'handleMouseEnter()'
     },
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -55,6 +54,8 @@ export class McDropdownItem extends McDropdownItemMixinBase implements IFocusabl
 
     /** ARIA role for the dropdown item. */
     @Input() role: 'menuitem' | 'menuitemradio' | 'menuitemcheckbox' = 'menuitem';
+
+    @Input() tabIndex: number;
 
     @ViewChild('content', { static: false }) content;
 
@@ -108,18 +109,13 @@ export class McDropdownItem extends McDropdownItemMixinBase implements IFocusabl
         this.hovered.complete();
     }
 
-    /** Used to set the `tabindex`. */
-    getTabIndex(): string {
-        return this.disabled ? '-1' : '0';
-    }
-
     /** Returns the host DOM element. */
     getHostElement(): HTMLElement {
         return this._elementRef.nativeElement;
     }
 
     /** Prevents the default element actions if it is disabled. */
-    checkDisabled(event: MouseEvent): void {
+    haltDisabledEvents(event: MouseEvent): void {
         if (this.disabled) {
             event.preventDefault();
             event.stopPropagation();

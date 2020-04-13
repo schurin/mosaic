@@ -2,10 +2,15 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { FocusMonitor } from '@angular/cdk/a11y';
 import {
     Attribute,
-    ChangeDetectionStrategy, ChangeDetectorRef,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
-    ElementRef, EventEmitter, forwardRef,
-    Input, Output, ViewChild,
+    ElementRef,
+    EventEmitter,
+    forwardRef,
+    Input,
+    Output,
+    ViewChild,
     ViewEncapsulation
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -46,12 +51,9 @@ export class McToggleChange {
     exportAs: 'mcToggle',
     templateUrl: './toggle.component.html',
     styleUrls: ['./toggle.scss'],
-    providers: [
-        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => McToggleComponent), multi: true}
-    ],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
-    inputs: ['disabled', 'color', 'tabIndex'],
+    inputs: ['color', 'tabIndex'],
     host: {
         class: 'mc-toggle',
         '[id]': 'id',
@@ -65,12 +67,15 @@ export class McToggleChange {
             state('false', style({ left: '1px' })),
             transition('true <=> false', animate('150ms'))
         ])
-    ]
+    ],
+    providers: [{
+        provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => McToggleComponent), multi: true
+    }]
 })
 export class McToggleComponent extends McToggleMixinBase
     implements ControlValueAccessor, CanColor, CanDisable, HasTabIndex {
 
-    @ViewChild('input', {static: false}) inputElement: ElementRef;
+    @ViewChild('input', { static: false }) inputElement: ElementRef;
 
     @Input() labelPosition: ToggleLabelPositionType = 'right';
 
@@ -120,16 +125,16 @@ export class McToggleComponent extends McToggleMixinBase
 
     private uniqueId: string = `mc-toggle-${++nextUniqueId}`;
 
-    // tslint:disable-next-line:naming-convention
-    constructor(public _elementRef: ElementRef,
-                private _focusMonitor: FocusMonitor,
-                private _changeDetectorRef: ChangeDetectorRef,
-                @Attribute('tabindex') tabIndex: string
+    constructor(
+        // tslint:disable-next-line:naming-convention
+        public _elementRef: ElementRef,
+        private _focusMonitor: FocusMonitor,
+        private _changeDetectorRef: ChangeDetectorRef,
+        @Attribute('tabindex') tabIndex: string
     ) {
         super(_elementRef);
 
         this.id =  this.uniqueId;
-
         this.tabIndex = parseInt(tabIndex) || 0;
 
         this._focusMonitor.monitor(this._elementRef.nativeElement, true);
