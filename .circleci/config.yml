@@ -349,6 +349,10 @@ workflows:
 
             - sonar:
                   <<: *sonar_run
+                  filters:
+                      branches:
+                          # not forks
+                          ignore: /^pull\/.*$/
 
             - sonar_for_forks:
                   <<: *sonar_run
