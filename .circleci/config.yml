@@ -337,6 +337,11 @@ workflows:
             # 7 Group
             - approve_sonar:
                   type: approval
+                  requires:
+                      - test_unit_cdk
+                      - test_unit_mosaic-moment-adapter
+                      - test_unit_mosaic
+                      - test_unit_schematics
                   filters:
                       branches:
                           # only from forks
